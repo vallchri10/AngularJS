@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+
+  <head>
+    <script data-require="angular.js@1.6.2"
+    data-semver="1.6.2" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body ng-controller="world">
+    <h1>{{message}}</h1>
+    <div>
+     <!-- <div>First Name : {{developer.firstname}}</div> 
+      <div>Last Name: {{developer.lastname}}</div>
+      <div>
+      <img ng-src="{{developer.img}}" title="{{developer.firstname}} {{developer.lastname}}" >
+      </div>
+      -->
+      
+      <div>
+        {{error}}
+      </div>
+      <div>
+        Name : {{user.name}}
+      </div>
+      <div>
+        Location : {{user.location}}
+      </div>
+      <div>
+        <img ng-src="{{user.avatar_url}}" title ={{user.name}}>
+      </div>
+    </div>
+  </body>
+
+</html>
