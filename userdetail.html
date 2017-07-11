@@ -1,0 +1,34 @@
+<!--Once there is a user information available then display this portion-->
+    <div id="userDetails">
+      <select ng-model="newOrder">
+        <option value="+name">Name</option>
+        <option value="+language">Language</option>
+      </select>
+
+      <div> Name : {{user.name}} </div>
+      <div> Location : {{user.location}}</div>
+
+      <!--
+      No Long need to display the location
+      <div>
+        Location : {{user.location}}
+      </div>
+      -->
+
+      <div> <img ng-src="{{user.avatar_url}}" title={{user.name}}></div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name </th>
+            <th>Language </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--For each repo in repos display this information and order it -->
+          <tr ng-repeat="repo in repos | orderBy:newOrder">
+            <td>{{repo.name}}</td>
+            <td>{{repo.language}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
