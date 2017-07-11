@@ -1,7 +1,6 @@
 // AngularJS Practice
 
 /*
-
 Writting code using IIFE in JavaScript (Immediately-Invoked Funtion Expression)
 This will execute immediately on run-time will help with polluting global variables
 and even overriding things.
@@ -29,14 +28,41 @@ and even overriding things.
   jobs.job1();
   jobs.job2();
   
-
 }());
 */
 
 (function() {
 
   var app = angular.module("demo", []);
-  app.controller("world", function($scope, $http) {
+
+  var controller = function(
+    $scope, github, $interval,
+    $log, $anchorScroll, $location) {
+
+    /*
+    Promise
+    When getting the user information is complete, get their repository information
+    and then go onRepos method else give an error if something went wrong.
+    */
+    var onUserComplete = function(data) {
+      $scope.user = data;
+      github.getRepos($scope.user).then(onRepos, error);
+    };
+
+    /*
+    When onUserComplete is successful use the reponse data and insert it to
+    $scope.repos to display information on the front-end.
+    */
+    var onRepos = function(data) {
+      $scope.repos = data;
+      /*
+      location gets the information of where to look with an id of userDetails
+      and then scrolls to that location.
+      */
+      $location.hash("userDetails");
+      $anchorScroll();
+    };
+
     /* 
     Hardcoded information to test out how AngularJS Works. 
     This is will display a user fullname and image.
@@ -54,20 +80,15 @@ and even overriding things.
     This is the benefits of AngularJS because it deals with asynchronous tasks.
     */
     $scope.search = function(username) {
-      $http.get("https://api.github.com/users/" + username)
-        .then(onUserComplete, error);
+      $log.info("User searched : " + username);
+      github.getUser(username).then(onUserComplete, error);
+      if (countInterval) {
+        $interval.cancel(countInterval);
+        $scope.startCountDown = null;
+      }
     };
 
-    /*
-    Promise
-    When getting the user information is complete, get their repository information
-    and then go onRepos method else give an error if something went wrong.
-    */
-    var onUserComplete = function(response) {
-      $scope.user = response.data;
-      $http.get($scope.user.repos_url)
-        .then(onRepos, error);
-    };
+
 
     /*
     If anything went wrong upon retriving information
@@ -77,25 +98,32 @@ and even overriding things.
       $scope.error = "Could Not Fetch Data.";
     };
 
-    /*
-    When onUserComplete is successful use the reponse data and insert it to
-    $scope.repos to display information on the front-end.
-    */
-    var onRepos = function(reponse) {
-      $scope.repos = reponse.data;
+    var decrementCount = function() {
+      $scope.startCountDown -= 1;
+      if ($scope.startCountDown < 1) {
+        $scope.search($scope.username);
+      }
     };
-    
+
+    var countInterval = null;
+    var count = function() {
+      countInterval = $interval(decrementCount, 1000, $scope.startCountDown);
+    };
+
     /*
     newOrder is set to order the items in the beginning by language
     but we also give the user the opportunity to order it by any way they wont
     on the fron end 
     */
+
+    //$scope.developer = dev;
     $scope.newOrder = "+language";
-    
     $scope.message = "GitHub Viewer";
     $scope.username = "Angular";
-    //$scope.developer = dev;
-    
-  });
+    $scope.startCountDown = 5;
+    count();
+
+  };
+  app.controller("controller", controller);
 
 }());

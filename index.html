@@ -3,27 +3,29 @@
 
 <head>
   <script data-require="angular.js@1.6.2" data-semver="1.6.2" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
-  <link rel="stylesheet" href="style.css" />
   <script src="script.js"></script>
+  <script src="github.js"></script>
 </head>
 
-<body ng-controller="world">
+<body ng-controller="controller">
   <h1>{{message}}</h1>
   <div>
+    
     <!-- <div>First Name : {{developer.firstname}}</div> 
       <div>Last Name: {{developer.lastname}}</div>
       <div>
       <img ng-src="{{developer.img}}" title="{{developer.firstname}} {{developer.lastname}}" >
       </div>
-      -->
-
+    -->
+      
     <div> {{error}} </div>
+    <div> {{startCountDown}} </div>
 
     <form name="searchUser" ng-submit="search(username)">
       <input type="search" required placeholder="Please Enter User Name" ng-model="username" />
       <input type="submit" value="Search" />
     </form>
-
+    
     <!-- 
       This is an example using ng-click(), however for our case we need to make sure
       the text field is filled out 
@@ -32,45 +34,12 @@
       <input type="search" required placeholder="Please Enter User Name" ng-model="username" />
       <input type="submit" value="Search"/>
       </form> 
-      -->
-
-  <!--Once there is a user information available then display this portion-->
-    <div ng-show="user">
-      <select ng-model="newOrder">
-        <option value="+name">Name</option>
-        <option value="+language">Language</option>
-      </select>
-
-      <div> Name : {{user.name}} </div>
-      <div> Location : {{user.location}}</div>
-
-      <!--
-      No Long need to display the location
-      <div>
-        Location : {{user.location}}
-      </div>
-      -->
-
-      <div> <img ng-src="{{user.avatar_url}}" title={{user.name}}></div>
-
-
-      <table>
-        <thead>
-          <tr>
-            <th>Name </th>
-            <th>Language </th>
-          </tr>
-        </thead>
-        <tbody>
-          <!--For each repo in repos display this information and order it -->
-          <tr ng-repeat="repo in repos | orderBy:newOrder">
-            <td>{{repo.name}}</td>
-            <td>{{repo.language}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    -->
+    
+    <!--Here we are telling Angular that show userdetail page once there is a 
+    user. This is useful when there are heavy page usuage and once need to show
+    this when needed. Think of it as a partial view -->  
+    <div ng-include="'userdetail.html'" ng-show="user"></div>
   </div>
 </body>
-
 </html>
