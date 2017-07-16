@@ -1,5 +1,7 @@
 <!--Once there is a user information available then display this portion-->
-    <div id="userDetails">
+    <div>
+     <h2>{{user.name}}</h2>
+      {{error}}
       <select ng-model="newOrder">
         <option value="+name">Name</option>
         <option value="+language">Language</option>
@@ -26,9 +28,14 @@
         <tbody>
           <!--For each repo in repos display this information and order it -->
           <tr ng-repeat="repo in repos | orderBy:newOrder">
-            <td>{{repo.name}}</td>
+            <td>
+                <a href="#/repo/{{user.login}}/{{repo.name}}">
+                    {{repo.name}}
+                </a>
+            </td>
             <td>{{repo.language}}</td>
           </tr>
         </tbody>
       </table>
+      <a href="#/main">Back to Search</a>
     </div>

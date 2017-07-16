@@ -1,7 +1,7 @@
 // AngularJS Practice
 
 /*
-Writting code using IIFE in JavaScript (Immediately-Invoked Funtion Expression)
+Writing code using IIFE in JavaScript (Immediately-Invoked Function Expression)
 This will execute immediately on run-time will help with polluting global variables
 and even overriding things.
 
@@ -33,35 +33,11 @@ and even overriding things.
 
 (function() {
 
-  var app = angular.module("demo", []);
+  var app = angular.module("demo");
 
-  var controller = function(
-    $scope, github, $interval,
-    $log, $anchorScroll, $location) {
+  var MainController = function(
+    $scope, $interval, $location) {
 
-    /*
-    Promise
-    When getting the user information is complete, get their repository information
-    and then go onRepos method else give an error if something went wrong.
-    */
-    var onUserComplete = function(data) {
-      $scope.user = data;
-      github.getRepos($scope.user).then(onRepos, error);
-    };
-
-    /*
-    When onUserComplete is successful use the reponse data and insert it to
-    $scope.repos to display information on the front-end.
-    */
-    var onRepos = function(data) {
-      $scope.repos = data;
-      /*
-      location gets the information of where to look with an id of userDetails
-      and then scrolls to that location.
-      */
-      $location.hash("userDetails");
-      $anchorScroll();
-    };
 
     /* 
     Hardcoded information to test out how AngularJS Works. 
@@ -80,23 +56,13 @@ and even overriding things.
     This is the benefits of AngularJS because it deals with asynchronous tasks.
     */
     $scope.search = function(username) {
-      $log.info("User searched : " + username);
-      github.getUser(username).then(onUserComplete, error);
       if (countInterval) {
         $interval.cancel(countInterval);
         $scope.startCountDown = null;
       }
+      $location.path("/user/" +username);
     };
 
-
-
-    /*
-    If anything went wrong upon retriving information
-    throw an error to the user.
-    */
-    var error = function(error) {
-      $scope.error = "Could Not Fetch Data.";
-    };
 
     var decrementCount = function() {
       $scope.startCountDown -= 1;
@@ -113,17 +79,15 @@ and even overriding things.
     /*
     newOrder is set to order the items in the beginning by language
     but we also give the user the opportunity to order it by any way they wont
-    on the fron end 
+    on the front end
     */
 
     //$scope.developer = dev;
-    $scope.newOrder = "+language";
-    $scope.message = "GitHub Viewer";
     $scope.username = "Angular";
-    $scope.startCountDown = 5;
+    $scope.startCountDown = 30;
     count();
 
   };
-  app.controller("controller", controller);
+  app.controller("MainController", MainController);
 
 }());

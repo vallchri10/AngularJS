@@ -3,43 +3,17 @@
 
 <head>
   <script data-require="angular.js@1.6.2" data-semver="1.6.2" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
-  <script src="script.js"></script>
+  <script data-require="angular-route@*" data-semver="1.5.8" src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="MainController.js"></script>
+  <script src="UserController.js"></script>
+  <script src="RepoController.js"></script>
   <script src="github.js"></script>
 </head>
 
-<body ng-controller="controller">
-  <h1>{{message}}</h1>
-  <div>
-    
-    <!-- <div>First Name : {{developer.firstname}}</div> 
-      <div>Last Name: {{developer.lastname}}</div>
-      <div>
-      <img ng-src="{{developer.img}}" title="{{developer.firstname}} {{developer.lastname}}" >
-      </div>
-    -->
-      
-    <div> {{error}} </div>
-    <div> {{startCountDown}} </div>
-
-    <form name="searchUser" ng-submit="search(username)">
-      <input type="search" required placeholder="Please Enter User Name" ng-model="username" />
-      <input type="submit" value="Search" />
-    </form>
-    
-    <!-- 
-      This is an example using ng-click(), however for our case we need to make sure
-      the text field is filled out 
-       
-      <form name="searchUser" ng-submit="search(username)">
-      <input type="search" required placeholder="Please Enter User Name" ng-model="username" />
-      <input type="submit" value="Search"/>
-      </form> 
-    -->
-    
-    <!--Here we are telling Angular that show userdetail page once there is a 
-    user. This is useful when there are heavy page usuage and once need to show
-    this when needed. Think of it as a partial view -->  
-    <div ng-include="'userdetail.html'" ng-show="user"></div>
-  </div>
+<body>
+<h1>GitHub Viewer</h1>
+<div ng-view></div>
 </body>
+
 </html>

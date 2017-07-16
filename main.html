@@ -1,0 +1,26 @@
+<div>
+
+    <!-- <div>First Name : {{developer.firstname}}</div>
+      <div>Last Name: {{developer.lastname}}</div>
+      <div>
+      <img ng-src="{{developer.img}}" title="{{developer.firstname}} {{developer.lastname}}" >
+      </div>
+    -->
+
+    <div> {{startCountDown}}</div>
+
+    <form name="searchUser" ng-submit="search(username)">
+        <input type="search" required placeholder="Please Enter User Name" ng-model="username"/>
+        <input type="submit" value="Search"/>
+    </form>
+
+    <!--
+      This is an example using ng-click(), however for our case we need to make sure
+      the text field is filled out
+
+      <form name="searchUser" ng-submit="search(username)">
+      <input type="search" required placeholder="Please Enter User Name" ng-model="username" />
+      <input type="submit" value="Search"/>
+      </form>
+    -->
+</div>
